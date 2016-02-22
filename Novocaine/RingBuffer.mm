@@ -77,10 +77,11 @@ void RingBuffer::AddNewSInt16AudioBuffer(const AudioBuffer aBuffer)
 		
 	for (int iChannel = 0; iChannel < mNumChannels; ++iChannel) {
 		for (int i=0; i < numFrames; ++i) {
-			idx = (i + mLastWrittenIndex[iChannel]) % (mSizeOfBuffer);
+			idx = (mLastWrittenIndex[iChannel] + i) % (mSizeOfBuffer);
 			mData[iChannel][idx] = (float)newData[i*numChannelsHere + iChannel];
 		}
         
+        /* 更新mLastWrittenIndex[iChannel]等的内容 */
         UpdateFrameCount(numFrames, iChannel);
 	}
 	
